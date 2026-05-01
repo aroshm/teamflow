@@ -1,15 +1,28 @@
 import AuthForm from "./AuthForm";
+import { supabase } from "../../utils/supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const handleSignup = async (data: {
     name?: string;
     email: string;
     password: string;
   }) => {
-    console.log("Signup data:", data);
+    const { error } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+      options: {
+        data: {
+          full_name: data.name,
+        },
+      },
+    });
 
-    // 🔥 later connect to Supabase here
-    // await supabase.auth.signUp(...)
+    if (error) throw new Error(error.message);
+
+    navigate("/dashboard");
   };
 
   return (
