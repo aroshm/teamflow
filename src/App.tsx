@@ -1,5 +1,6 @@
 import "./App.css";
+import SignIn from "./pages/SignIn";
 
 export default function App() {
-  return <>App</>;
+  return <SignIn />;
 }
