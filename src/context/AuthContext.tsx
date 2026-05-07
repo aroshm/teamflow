@@ -80,7 +80,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const SignInUser = async (email: string, password: string) => {
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
       });
