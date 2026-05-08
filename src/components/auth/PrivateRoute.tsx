@@ -1,9 +1,9 @@
 import { type ReactNode } from "react";
-import { UserAuth } from "../../context/AuthContext";
+import { useUserAuth } from "../../hooks/useUserAuth";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }: { children: ReactNode }) => {
-  const { session, loading } = UserAuth();
+  const { session, loading } = useUserAuth();
 
   if (loading)
     return (

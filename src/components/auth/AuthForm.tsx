@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserAuth } from "../../context/AuthContext";
+import { useUserAuth } from "../../hooks/useUserAuth";
 
 type AuthMode = "signin" | "signup";
 
@@ -15,7 +15,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { SignUpNewUser, SignInUser } = UserAuth();
+  const { SignUpNewUser, SignInUser } = useUserAuth();
   const navigate = useNavigate();
   const isSignIn = mode === "signin";
 

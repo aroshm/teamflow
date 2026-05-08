@@ -1,0 +1,22 @@
+<svg width="240" height="64" viewBox="0 0 240 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="teamflowGradientDark" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#818CF8"/>
+      <stop offset="1" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon -->
+  <rect x="4" y="8" width="48" height="48" rx="14" fill="url(#teamflowGradientDark)"/>
+
+  <!-- Flow Symbol -->
+  <path d="M18 22H38" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M28 22V42" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="18" cy="42" r="4" fill="white"/>
+  <circle cx="38" cy="42" r="4" fill="white"/>
+
+  <!-- Text -->
+  <text x="68" y="40" fill="#F9FAFB" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">
+    TeamFlow
+  </text>
+</svg>

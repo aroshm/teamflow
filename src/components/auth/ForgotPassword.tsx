@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { UserAuth } from "../../context/AuthContext";
+import { useUserAuth } from "../../hooks/useUserAuth";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const { ResetPassword } = UserAuth();
+  const { ResetPassword } = useUserAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

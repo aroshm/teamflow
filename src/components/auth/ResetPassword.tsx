@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserAuth } from "../../context/AuthContext";
+import { useUserAuth } from "../../hooks/useUserAuth";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -9,7 +9,7 @@ const ResetPassword = () => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const { UpdatePassword } = UserAuth();
+  const { UpdatePassword } = useUserAuth();
 
   const navigate = useNavigate();
 

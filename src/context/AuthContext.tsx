@@ -1,52 +1,7 @@
 import type { Session } from "@supabase/supabase-js";
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { supabase } from "../lib/Supabase";
-
-type AuthContextType = {
-  session: Session | null;
-  loading: boolean;
-
-  SignUpNewUser: (
-    name: string,
-    email: string,
-    password: string,
-  ) => Promise<{
-    success: boolean;
-    data?: unknown;
-    error?: unknown;
-  }>;
-
-  SignInUser: (
-    email: string,
-    password: string,
-  ) => Promise<{
-    success: boolean;
-    data?: unknown;
-    error?: unknown;
-  }>;
-
-  SignOut: () => Promise<void>;
-
-  ResetPassword: (email: string) => Promise<{
-    success: boolean;
-    data?: unknown;
-    error?: unknown;
-  }>;
-
-  UpdatePassword: (password: string) => Promise<{
-    success: boolean;
-    data?: unknown;
-    error?: unknown;
-  }>;
-};
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import { AuthContext } from "./authContextValue";
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
@@ -154,6 +109,33 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const RetrieveUser = async () => {
+    try {
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+
+      if (error) {
+        console.error("Error fetching Profile:", error);
+        return { success: false, error };
+      }
+
+      if (!user) return { success: false, error: "User Not Found" };
+
+      return {
+        success: true,
+        data: {
+          full_name: user.user_metadata.full_name,
+          email: user.email,
+        },
+      };
+    } catch (error) {
+      console.error("Error fetching Profile:", error);
+      return { success: false, error };
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -164,19 +146,10 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         SignOut,
         ResetPassword,
         UpdatePassword,
+        RetrieveUser,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const UserAuth = () => {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error("UserAuth must be used within an AuthContextProvider");
-  }
-
-  return context;
 };
