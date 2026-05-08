@@ -111,6 +111,17 @@ const AuthForm = ({ mode }: AuthFormProps) => {
                 {isSignIn ? "Sign in" : "Sign up"}
               </button>
               {error && <p className="text-red-600 pt-4">{error}</p>}
+              {isSignIn && (
+                <div className="flex items-center justify-start mb-2.5">
+                  <Link
+                    to="/forgot-password"
+                    className="text-sm  font-medium text-blue-600 hover:underline dark:text-primary-500"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
+              )}
+
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 {isSignIn
                   ? `Don’t have an account yet? ${" "}`

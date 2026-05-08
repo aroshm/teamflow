@@ -32,6 +32,18 @@ type AuthContextType = {
   }>;
 
   SignOut: () => Promise<void>;
+
+  ResetPassword: (email: string) => Promise<{
+    success: boolean;
+    data?: unknown;
+    error?: unknown;
+  }>;
+
+  UpdatePassword: (password: string) => Promise<{
+    success: boolean;
+    data?: unknown;
+    error?: unknown;
+  }>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -61,21 +73,26 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     email: string,
     password: string,
   ) => {
-    const { data, error } = await supabase.auth.signUp({
-      options: {
-        data: {
-          full_name: name,
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        options: {
+          data: {
+            full_name: name,
+          },
         },
-      },
-      email: email,
-      password: password,
-    });
+        email: email,
+        password: password,
+      });
 
-    if (error) {
+      if (error) {
+        console.error("There was a problem signing up:", error);
+        return { success: false, error };
+      }
+      return { success: true, data };
+    } catch (error) {
       console.error("There was a problem signing up:", error);
       return { success: false, error };
     }
-    return { success: true, data };
   };
 
   const SignInUser = async (email: string, password: string) => {
@@ -103,9 +120,51 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const ResetPassword = async (email: string) => {
+    try {
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+
+      if (error) {
+        console.error("There was a problem resetting password:", error);
+        return { success: false, error };
+      }
+      return { success: true, data };
+    } catch (error) {
+      console.error("There was a problem resetting password:", error);
+      return { success: false, error };
+    }
+  };
+
+  const UpdatePassword = async (password: string) => {
+    try {
+      const { data, error } = await supabase.auth.updateUser({
+        password: password,
+      });
+
+      if (error) {
+        console.error("There was a problem updating password:", error);
+        return { success: false, error };
+      }
+      return { success: true, data };
+    } catch (error) {
+      console.error("There was a problem updating password:", error);
+      return { success: false, error };
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ loading, session, SignUpNewUser, SignInUser, SignOut }}
+      value={{
+        loading,
+        session,
+        SignUpNewUser,
+        SignInUser,
+        SignOut,
+        ResetPassword,
+        UpdatePassword,
+      }}
     >
       {children}
     </AuthContext.Provider>
