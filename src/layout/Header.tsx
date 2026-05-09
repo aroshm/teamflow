@@ -3,6 +3,7 @@ import LogoLight from "../assets/logo-light.svg";
 // import LogoDark from "../assets/logo-dark.svg";
 import { FaCircleUser } from "react-icons/fa6";
 import { useUserAuth } from "../hooks/useUserAuth";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -53,10 +54,10 @@ const Header = () => {
             id="user-dropdown"
           >
             <div className="px-4 py-3 text-sm border-b border-indigo-300">
-              <span className="block text-heading font-medium">
+              <span className="block font-semibold text-indigo-600 cursor-default">
                 {userProfile?.full_name || null}
               </span>
-              <span className="block text-body truncate">
+              <span className="block truncate text-indigo-600 cursor-default">
                 {userProfile?.email || null}
               </span>
             </div>
@@ -65,17 +66,17 @@ const Header = () => {
               aria-labelledby="user-menu-button"
             >
               <li>
-                <a
-                  href="#"
-                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                <Link
+                  to="/dashboard"
+                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:bg-indigo-200 rounded transition"
                 >
                   Dashboard
-                </a>
+                </Link>
               </li>
               <li>
                 <a
                   href="#"
-                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:bg-indigo-200 rounded transition"
                 >
                   Settings
                 </a>
@@ -83,14 +84,14 @@ const Header = () => {
               <li>
                 <a
                   href="#"
-                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:bg-indigo-200 rounded transition"
                 >
                   Earnings
                 </a>
               </li>
               <li>
                 <p
-                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded cursor-pointer"
+                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:bg-indigo-200 rounded transition cursor-pointer"
                   onClick={SignOut}
                 >
                   Sign out

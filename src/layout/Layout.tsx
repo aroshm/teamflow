@@ -1,9 +1,9 @@
-import type { ReactNode } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useUserAuth } from "../hooks/useUserAuth";
+import { Outlet } from "react-router-dom";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = () => {
   const { session } = useUserAuth();
   return (
     <div className="flex flex-col h-screen">
@@ -12,7 +12,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       <div className="flex flex-1">
         {session && <Sidebar />}
         <main className="p-5 bg-violet-50 flex-1 overflow-y-auto dark:bg-gray-900">
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>
