@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import ResetPassword from "./components/auth/ResetPassword";
+import Layout from "./layout/Layout";
 
 export const router = createBrowserRouter([
   { path: "/", element: <SignIn /> },
@@ -13,11 +14,10 @@ export const router = createBrowserRouter([
   { path: "/forgot-password", element: <ForgotPassword /> },
   { path: "/reset-password", element: <ResetPassword /> },
   {
-    path: "/dashboard",
-    element: (
-      <PrivateRoute>
-        <Dashboard />
-      </PrivateRoute>
-    ),
+    element: <Layout/>,
+    children: [
+      {path: "/", element: <SignIn/>},
+      {path: "/dashboard", element: <PrivateRoute><Dashboard/></PrivateRoute>}
+    ]
   },
 ]);
