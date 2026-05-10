@@ -30,7 +30,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
         : await SignUpNewUser(name, email, password);
 
       if (result.success) {
-        navigate("/dashboard");
+        navigate("/board");
       } else {
         setError("An error occurred");
       }

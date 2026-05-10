@@ -3,7 +3,6 @@ import LogoLight from "../assets/logo-light.svg";
 import LogoDark from "../assets/logo-dark.svg";
 import { FaCircleUser, FaRegMoon, FaRegSun } from "react-icons/fa6";
 import { useUserAuth } from "../hooks/useUserAuth";
-import { Link } from "react-router-dom";
 
 type HeaderProps = {
   darkMode: boolean;
@@ -51,7 +50,11 @@ const Header = ({ darkMode, setDarkMode }: HeaderProps) => {
             type="button"
             onClick={setDarkMode}
           >
-            {darkMode ? <FaRegSun /> : <FaRegMoon />}
+            {darkMode ? (
+              <FaRegSun className="text-xl" />
+            ) : (
+              <FaRegMoon className="text-xl" />
+            )}
           </button>
 
           <button
@@ -83,30 +86,6 @@ const Header = ({ darkMode, setDarkMode }: HeaderProps) => {
               className="p-2 text-sm text-body font-medium"
               aria-labelledby="user-menu-button"
             >
-              <li>
-                <Link
-                  to="/dashboard"
-                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:bg-indigo-200 rounded transition dark:text-indigo-100 dark:hover:bg-indigo-900"
-                >
-                  Dashboard
-                </Link>
-              </li>
-              {/* <li>
-                <a
-                  href="#"
-                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:bg-indigo-200 rounded transition"
-                >
-                  Settings
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:bg-indigo-200 rounded transition"
-                >
-                  Earnings
-                </a>
-              </li> */}
               <li>
                 <p
                   className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:bg-indigo-200 rounded transition cursor-pointer dark:text-indigo-100 dark:hover:bg-indigo-900"

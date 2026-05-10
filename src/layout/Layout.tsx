@@ -1,4 +1,3 @@
-import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useUserAuth } from "../hooks/useUserAuth";
 import { Outlet } from "react-router-dom";
@@ -12,8 +11,7 @@ const Layout = () => {
       {session && <Header darkMode={darkMode} setDarkMode={setDarkMode} />}
 
       <div className="flex flex-1">
-        {session && <Sidebar />}
-        <main className="p-5 bg-violet-50 flex-1 overflow-y-auto dark:bg-gray-900">
+        <main className="p-5 bg-violet-50 flex-1 overflow-y-auto dark:bg-gray-800">
           <Outlet />
         </main>
       </div>
