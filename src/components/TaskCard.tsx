@@ -6,7 +6,14 @@ import {
   FaAngleDown,
 } from "react-icons/fa6";
 import useClickOutside from "../hooks/useClickOutside";
-const TaskCard = () => {
+
+type TaskCardProps = {
+  priority: string;
+  title: string;
+  description: string;
+  status: string;
+};
+const TaskCard = ({ priority, title, description, status }: TaskCardProps) => {
   //   const [importance, setImportance] = useState();
   const [showDropDown, setShowDropDown] = useState(false);
   const [dropDownValue, setdropDownValue] = useState("To Do");
@@ -24,18 +31,18 @@ const TaskCard = () => {
     <div className="flex flex-col bg-violet-50 rounded-lg p-2.5 shadow border border-indigo-200 dark:border-indigo-400 dark:bg-gray-800 dark:text-indigo-100">
       <div className="flex justify-between">
         <div>
-          <div className="flex items-center text-red-600 dark:text-red-300 mb-2.5 gap-1.5">
-            <FaFaceFlushed />
-            High
+          <div
+            className={`flex items-center mb-2.5 gap-1.5 ${priority === "High" ? "text-red-600 dark:text-red-300" : priority === "Medium" ? "text-yellow-600 dark:text-yellow-300" : "text-green-600 dark:text-green-300"}`}
+          >
+            {priority === "High" ? (
+              <FaFaceFlushed />
+            ) : priority === "Medium" ? (
+              <FaFaceGrimace />
+            ) : (
+              <FaFaceSmileWink />
+            )}
+            {priority}
           </div>
-          {/* <div className="flex items-center text-yellow-600 dark:text-yellow-300 mb-2.5 gap-1.5">
-            <FaFaceGrimace />
-            Medium
-          </div>
-          <div className="flex items-center text-green-600 dark:text-green-300 mb-2.5 gap-1.5">
-            <FaFaceSmileWink />
-            Low
-          </div> */}
         </div>
 
         <div className="relative" ref={dropDownRef}>
@@ -74,11 +81,8 @@ const TaskCard = () => {
         </div>
       </div>
 
-      <h4 className="font-bold text-lg mb-2.5">Lorem ipsum dolor sit.</h4>
-      <p>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum,
-        consequatur.
-      </p>
+      <h4 className="font-bold text-lg mb-2.5">{title}</h4>
+      <p>{description}</p>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import Column from "../components/board/Column";
 import TaskCard from "../components/TaskCard";
+import Tasks from "../data/Tasks";
 
 const Board = () => {
   const initialBoard = [
@@ -11,7 +12,14 @@ const Board = () => {
     <div className="flex gap-5 h-full">
       {initialBoard.map((column) => (
         <Column key={column.id} title={column.title}>
-          <TaskCard />
+          {Tasks.filter((task) => task.status === column.id).map((task) => (
+            <TaskCard
+              priority={task.priority}
+              title={task.title}
+              description={task.description}
+              status={task.status}
+            />
+          ))}
         </Column>
       ))}
     </div>

@@ -1,0 +1,192 @@
+const Tasks = [
+  {
+    priority: "High",
+    title: "Implement user authentication",
+    description:
+      "This task involves setting up secure user login and registration.",
+    status: "in-progress",
+  },
+  {
+    priority: "Medium",
+    title: "Design dashboard layout",
+    description: "Create an intuitive and responsive dashboard interface.",
+    status: "done",
+  },
+  {
+    priority: "Low",
+    title: "Fix login bug",
+    description:
+      "Resolve the issue where users can't log in on certain devices.",
+    status: "to-do",
+  },
+  {
+    priority: "High",
+    title: "Add search functionality",
+    description: "Implement a search bar to find tasks quickly.",
+    status: "done",
+  },
+  {
+    priority: "Medium",
+    title: "Optimize database queries",
+    description: "Improve query performance to reduce load times.",
+    status: "to-do",
+  },
+  {
+    priority: "Low",
+    title: "Create user profile page",
+    description: "Build a page for users to view and edit their profiles.",
+    status: "in-progress",
+  },
+  {
+    priority: "High",
+    title: "Integrate payment system",
+    description: "Add payment processing capabilities to the app.",
+    status: "to-do",
+  },
+  {
+    priority: "Medium",
+    title: "Write unit tests",
+    description: "Develop comprehensive unit tests for core functions.",
+    status: "done",
+  },
+  {
+    priority: "Low",
+    title: "Deploy to production",
+    description: "Move the latest version to the production environment.",
+    status: "in-progress",
+  },
+  {
+    priority: "High",
+    title: "Update documentation",
+    description: "Revise and expand the project documentation.",
+    status: "in-progress",
+  },
+  {
+    priority: "Medium",
+    title: "Refactor code",
+    description: "Clean up and optimize the existing codebase.",
+    status: "to-do",
+  },
+  {
+    priority: "Low",
+    title: "Add notifications",
+    description: "Implement a system for sending user notifications.",
+    status: "done",
+  },
+  {
+    priority: "High",
+    title: "Improve performance",
+    description: "Enhance app speed and responsiveness.",
+    status: "done",
+  },
+  {
+    priority: "Medium",
+    title: "Handle error cases",
+    description: "Add proper error handling throughout the application.",
+    status: "in-progress",
+  },
+  {
+    priority: "Low",
+    title: "Add dark mode",
+    description: "Implement a dark theme option for the UI.",
+    status: "to-do",
+  },
+  {
+    priority: "High",
+    title: "Implement drag and drop",
+    description: "Allow users to drag and drop tasks between columns.",
+    status: "in-progress",
+  },
+  {
+    priority: "Medium",
+    title: "Create admin panel",
+    description: "Build an administrative interface for managing users.",
+    status: "done",
+  },
+  {
+    priority: "Low",
+    title: "Add export feature",
+    description: "Enable exporting task data to various formats.",
+    status: "to-do",
+  },
+  {
+    priority: "High",
+    title: "Fix mobile responsiveness",
+    description: "Ensure the app works well on mobile devices.",
+    status: "to-do",
+  },
+  {
+    priority: "Medium",
+    title: "Implement caching",
+    description: "Add caching to improve data retrieval speed.",
+    status: "in-progress",
+  },
+  {
+    priority: "Low",
+    title: "Add user feedback",
+    description: "Create a form for users to submit feedback.",
+    status: "done",
+  },
+  {
+    priority: "High",
+    title: "Update dependencies",
+    description: "Upgrade all project dependencies to latest versions.",
+    status: "done",
+  },
+  {
+    priority: "Medium",
+    title: "Create API endpoints",
+    description: "Develop new REST API endpoints for data access.",
+    status: "to-do",
+  },
+  {
+    priority: "Low",
+    title: "Add validation",
+    description: "Implement input validation for forms and data.",
+    status: "in-progress",
+  },
+  {
+    priority: "High",
+    title: "Implement logging",
+    description: "Add comprehensive logging for debugging and monitoring.",
+    status: "in-progress",
+  },
+  {
+    priority: "Medium",
+    title: "Create backup system",
+    description: "Set up automated backups for data safety.",
+    status: "done",
+  },
+  {
+    priority: "Low",
+    title: "Add analytics",
+    description: "Integrate analytics to track user behavior.",
+    status: "to-do",
+  },
+  {
+    priority: "High",
+    title: "Fix security issues",
+    description: "Address any identified security vulnerabilities.",
+    status: "done",
+  },
+  {
+    priority: "Medium",
+    title: "Create user guide",
+    description: "Write a comprehensive guide for users.",
+    status: "to-do",
+  },
+  {
+    priority: "Low",
+    title: "Add multi-language support",
+    description: "Implement internationalization for multiple languages.",
+    status: "in-progress",
+  },
+  {
+    priority: "High",
+    title: "Implement real-time updates",
+    description: "Add live updates for collaborative features.",
+    status: "to-do",
+  },
+];
+
+export default Tasks;
