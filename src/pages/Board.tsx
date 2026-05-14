@@ -1,25 +1,38 @@
+import { useState } from "react";
 import Column from "../components/board/Column";
 import TaskCard from "../components/TaskCard";
 import Tasks from "../data/Tasks";
+import { TASK_STATUSES } from "../types/task";
 
 const Board = () => {
-  const initialBoard = [
-    { id: "to-do", title: "To Do" },
-    { id: "in-progress", title: "In Progress" },
-    { id: "done", title: "Done" },
-  ];
+  const [tasks, setTasks] = useState(Tasks);
+
+  const columns = TASK_STATUSES;
+
+  const updateTaskStatus = (title: string, newStatus: string) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.title === title ? { ...task, status: newStatus } : task,
+      ),
+    );
+  };
+
   return (
     <div className="flex gap-5 h-full">
-      {initialBoard.map((column) => (
-        <Column key={column.id} title={column.title}>
-          {Tasks.filter((task) => task.status === column.id).map((task) => (
-            <TaskCard
-              priority={task.priority}
-              title={task.title}
-              description={task.description}
-              status={task.status}
-            />
-          ))}
+      {columns.map((status) => (
+        <Column key={status} title={status}>
+          {tasks
+            .filter((task) => task.status === status)
+            .map((task) => (
+              <TaskCard
+                key={task.title}
+                priority={task.priority}
+                title={task.title}
+                description={task.description}
+                status={task.status}
+                onStatusChange={updateTaskStatus}
+              />
+            ))}
         </Column>
       ))}
     </div>

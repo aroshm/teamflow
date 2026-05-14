@@ -6,27 +6,28 @@ import {
   FaAngleDown,
 } from "react-icons/fa6";
 import useClickOutside from "../hooks/useClickOutside";
+import { TASK_STATUSES, type TaskPriority, type TaskStatus } from "../types/task";
 
 type TaskCardProps = {
-  priority: string;
+  priority: TaskPriority | string;
   title: string;
   description: string;
-  status: string;
+  status: TaskStatus | string;
+  onStatusChange: (title: string, newStatus: string) => void;
 };
-const TaskCard = ({ priority, title, description, status }: TaskCardProps) => {
-  //   const [importance, setImportance] = useState();
+const TaskCard = ({
+  priority,
+  title,
+  description,
+  status,
+  onStatusChange,
+}: TaskCardProps) => {
   const [showDropDown, setShowDropDown] = useState(false);
-  const [dropDownValue, setdropDownValue] = useState("To Do");
 
   const dropDownRef = useRef<HTMLDivElement>(null);
   const toggleDropDown = () => setShowDropDown((prev) => !prev);
   useClickOutside(dropDownRef, () => setShowDropDown(false));
 
-  const dropDownOptions = [
-    { name: "To Do", value: "to-do" },
-    { name: "In Progress", value: "in-progress" },
-    { name: "Done", value: "done" },
-  ];
   return (
     <div className="flex flex-col bg-violet-50 rounded-lg p-2.5 shadow border border-indigo-200 dark:border-indigo-400 dark:bg-gray-800 dark:text-indigo-100">
       <div className="flex justify-between">
@@ -35,11 +36,11 @@ const TaskCard = ({ priority, title, description, status }: TaskCardProps) => {
             className={`flex items-center mb-2.5 gap-1.5 ${priority === "High" ? "text-red-600 dark:text-red-300" : priority === "Medium" ? "text-yellow-600 dark:text-yellow-300" : "text-green-600 dark:text-green-300"}`}
           >
             {priority === "High" ? (
-              <FaFaceFlushed />
+              <FaFaceFlushed className="h-6 w-6" />
             ) : priority === "Medium" ? (
-              <FaFaceGrimace />
+              <FaFaceGrimace className="h-6 w-6" />
             ) : (
-              <FaFaceSmileWink />
+              <FaFaceSmileWink className="h-6 w-6" />
             )}
             {priority}
           </div>
@@ -53,7 +54,7 @@ const TaskCard = ({ priority, title, description, status }: TaskCardProps) => {
             type="button"
             onClick={toggleDropDown}
           >
-            {dropDownValue}
+            {status}
             <FaAngleDown />
           </button>
 
@@ -65,15 +66,15 @@ const TaskCard = ({ priority, title, description, status }: TaskCardProps) => {
               className="p-2 text-sm text-body font-medium"
               aria-labelledby="dropdownDefaultButton"
             >
-              {dropDownOptions.map((item) => (
+              {TASK_STATUSES.map((item) => (
                 <li
                   className="p-1 hover:bg-violet-200 dark:hover:bg-gray-600 cursor-pointer"
                   onClick={() => {
-                    setdropDownValue(item.name);
+                    onStatusChange(title, item);
                     setShowDropDown(false);
                   }}
                 >
-                  {item.name}
+                  {item}
                 </li>
               ))}
             </ul>
