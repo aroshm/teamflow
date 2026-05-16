@@ -4,6 +4,7 @@ import {
   FaFaceGrimace,
   FaFaceSmileWink,
   FaAngleDown,
+  FaRegTrashCan,
 } from "react-icons/fa6";
 import useClickOutside from "../hooks/useClickOutside";
 import {
@@ -20,6 +21,7 @@ type TaskCardProps = {
   status: TaskStatus | string;
   onStatusChange: (title: string, newStatus: string) => void;
   onTaskUpdate: (id: string, field: string, value: string) => void;
+  onDeleteTask: (id: string) => void;
 };
 const TaskCard = ({
   id,
@@ -29,6 +31,7 @@ const TaskCard = ({
   status,
   onStatusChange,
   onTaskUpdate,
+  onDeleteTask,
 }: TaskCardProps) => {
   const [showDropDown, setShowDropDown] = useState(false);
 
@@ -115,13 +118,23 @@ const TaskCard = ({
       <input
         type="text"
         className="font-bold text-lg mb-2.5"
+        name="task-title"
         value={title}
         onChange={(e) => onTaskUpdate(id, "title", e.target.value)}
+        placeholder="Add task title"
       />
       <textarea
         value={description}
+        name="task-description"
         onChange={(e) => onTaskUpdate(id, "description", e.target.value)}
+        placeholder="Add task description"
       />
+      <div className="flex justify-end mt-4">
+        <FaRegTrashCan
+          className="text-red-600 dark:text-red-300 cursor-pointer"
+          onClick={() => onDeleteTask(id)}
+        />
+      </div>
     </div>
   );
 };

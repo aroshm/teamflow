@@ -38,6 +38,10 @@ const Board = () => {
     );
   };
 
+  const deleteTask = (id: string) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+  };
+
   return (
     <div className="flex flex-1 flex-col gap-5 min-h-0 overflow-auto">
       <BoardHeader onAddTask={addTask} />
@@ -56,6 +60,7 @@ const Board = () => {
                   status={task.status}
                   onStatusChange={updateTaskStatus}
                   onTaskUpdate={updateTask}
+                  onDeleteTask={deleteTask}
                 />
               ))}
           </Column>
