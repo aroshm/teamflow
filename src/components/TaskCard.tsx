@@ -80,7 +80,10 @@ const TaskCard = ({
             onKeyDown={(e) => handleKeyDown(e)}
           >
             {TASK_STATUSES.map((item) => (
-              <option className="bg-indigo-100 dark:bg-gray-900 text-black dark:text-white">
+              <option
+                className="bg-indigo-100 dark:bg-gray-900 text-black dark:text-white"
+                key={item}
+              >
                 {item}
               </option>
             ))}
