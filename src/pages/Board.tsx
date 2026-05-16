@@ -10,10 +10,10 @@ const Board = () => {
 
   const columns = TASK_STATUSES;
 
-  const updateTaskStatus = (title: string, newStatus: string) => {
+  const updateTaskStatus = (title: string, value: string) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
-        task.title === title ? { ...task, status: newStatus } : task,
+        task.title === title ? { ...task, status: value } : task,
       ),
     );
   };
@@ -27,7 +27,7 @@ const Board = () => {
       status: "To Do",
     };
 
-    setTasks((prevTasks) => [...prevTasks, newTask]);
+    setTasks((prevTasks) => [newTask, ...prevTasks]);
   };
 
   const updateTask = (id: string, field: string, value: string) => {
@@ -40,6 +40,12 @@ const Board = () => {
 
   const deleteTask = (id: string) => {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+  };
+
+  const escapeFocus = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === "Escape") {
+      e.currentTarget.blur();
+    }
   };
 
   return (
@@ -61,6 +67,7 @@ const Board = () => {
                   onStatusChange={updateTaskStatus}
                   onTaskUpdate={updateTask}
                   onDeleteTask={deleteTask}
+                  handleKeyDown={escapeFocus}
                 />
               ))}
           </Column>

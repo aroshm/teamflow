@@ -1,12 +1,9 @@
-import { useRef, useState } from "react";
 import {
   FaFaceFlushed,
   FaFaceGrimace,
   FaFaceSmileWink,
-  FaAngleDown,
   FaRegTrashCan,
 } from "react-icons/fa6";
-import useClickOutside from "../hooks/useClickOutside";
 import {
   TASK_STATUSES,
   type TaskPriority,
@@ -19,9 +16,10 @@ type TaskCardProps = {
   title: string;
   description: string;
   status: TaskStatus | string;
-  onStatusChange: (title: string, newStatus: string) => void;
+  onStatusChange: (title: string, value: string) => void;
   onTaskUpdate: (id: string, field: string, value: string) => void;
   onDeleteTask: (id: string) => void;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void;
 };
 const TaskCard = ({
   id,
@@ -32,13 +30,8 @@ const TaskCard = ({
   onStatusChange,
   onTaskUpdate,
   onDeleteTask,
+  handleKeyDown,
 }: TaskCardProps) => {
-  const [showDropDown, setShowDropDown] = useState(false);
-
-  const dropDownRef = useRef<HTMLDivElement>(null);
-  const toggleDropDown = () => setShowDropDown((prev) => !prev);
-  useClickOutside(dropDownRef, () => setShowDropDown(false));
-
   return (
     <div className="flex flex-col bg-violet-50 rounded-lg p-2.5 shadow border border-indigo-200 dark:border-indigo-400 dark:bg-gray-800 dark:text-indigo-100">
       <div className="flex justify-between">
@@ -56,6 +49,7 @@ const TaskCard = ({
             <select
               value={priority}
               onChange={(e) => onTaskUpdate(id, "priority", e.target.value)}
+              onKeyDown={(e) => handleKeyDown(e)}
             >
               <option
                 value="Low"
@@ -79,39 +73,18 @@ const TaskCard = ({
           </div>
         </div>
 
-        <div className="relative" ref={dropDownRef}>
-          <button
-            id="dropdownDefaultButton"
-            data-dropdown-toggle="dropdown"
-            className="inline-flex items-center justify-center gap-1.5 cursor-pointer"
-            type="button"
-            onClick={toggleDropDown}
+        <div className="relative">
+          <select
+            value={status}
+            onChange={(e) => onStatusChange(title, e.target.value)}
+            onKeyDown={(e) => handleKeyDown(e)}
           >
-            {status}
-            <FaAngleDown />
-          </button>
-
-          <div
-            id="dropdown"
-            className={`${showDropDown ? "" : "hidden"} z-10 bg-violet-100 dark:bg-gray-700 border border-violet-300 dark:border-indigo-400 rounded shadow-lg w-44 absolute right-0`}
-          >
-            <ul
-              className="p-2 text-sm text-body font-medium"
-              aria-labelledby="dropdownDefaultButton"
-            >
-              {TASK_STATUSES.map((item) => (
-                <li
-                  className="p-1 hover:bg-violet-200 dark:hover:bg-gray-600 cursor-pointer"
-                  onClick={() => {
-                    onStatusChange(title, item);
-                    setShowDropDown(false);
-                  }}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+            {TASK_STATUSES.map((item) => (
+              <option className="bg-indigo-100 dark:bg-gray-900 text-black dark:text-white">
+                {item}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -121,12 +94,14 @@ const TaskCard = ({
         name="task-title"
         value={title}
         onChange={(e) => onTaskUpdate(id, "title", e.target.value)}
+        onKeyDown={(e) => handleKeyDown(e)}
         placeholder="Add task title"
       />
       <textarea
         value={description}
         name="task-description"
         onChange={(e) => onTaskUpdate(id, "description", e.target.value)}
+        onKeyDown={(e) => handleKeyDown(e)}
         placeholder="Add task description"
       />
       <div className="flex justify-end mt-4">
