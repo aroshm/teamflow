@@ -3,6 +3,7 @@ import Column from "../components/board/Column";
 import TaskCard from "../components/TaskCard";
 import Tasks from "../data/Tasks";
 import { TASK_STATUSES } from "../types/task";
+import BoardHeader from "../components/board/BoardHeader";
 
 const Board = () => {
   const [tasks, setTasks] = useState(Tasks);
@@ -17,24 +18,39 @@ const Board = () => {
     );
   };
 
+  const addTask = () => {
+    const newTask = {
+      id: crypto.randomUUID(),
+      title: "",
+      description: "",
+      priority: "",
+      status: "To Do",
+    };
+
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+  };
+
   return (
-    <div className="flex gap-5 h-full">
-      {columns.map((status) => (
-        <Column key={status} title={status}>
-          {tasks
-            .filter((task) => task.status === status)
-            .map((task) => (
-              <TaskCard
-                key={task.title}
-                priority={task.priority}
-                title={task.title}
-                description={task.description}
-                status={task.status}
-                onStatusChange={updateTaskStatus}
-              />
-            ))}
-        </Column>
-      ))}
+    <div className="flex flex-1 flex-col gap-5 min-h-0 overflow-auto">
+      <BoardHeader onAddTask={addTask} />
+      <div className="flex flex-1 gap-5 min-h-0">
+        {columns.map((status) => (
+          <Column key={status} title={status}>
+            {tasks
+              .filter((task) => task.status === status)
+              .map((task) => (
+                <TaskCard
+                  key={task.title}
+                  priority={task.priority}
+                  title={task.title}
+                  description={task.description}
+                  status={task.status}
+                  onStatusChange={updateTaskStatus}
+                />
+              ))}
+          </Column>
+        ))}
+      </div>
     </div>
   );
 };
