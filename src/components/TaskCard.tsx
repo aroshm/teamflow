@@ -6,21 +6,29 @@ import {
   FaAngleDown,
 } from "react-icons/fa6";
 import useClickOutside from "../hooks/useClickOutside";
-import { TASK_STATUSES, type TaskPriority, type TaskStatus } from "../types/task";
+import {
+  TASK_STATUSES,
+  type TaskPriority,
+  type TaskStatus,
+} from "../types/task";
 
 type TaskCardProps = {
+  id: string;
   priority: TaskPriority | string;
   title: string;
   description: string;
   status: TaskStatus | string;
   onStatusChange: (title: string, newStatus: string) => void;
+  onTaskUpdate: (id: string, field: string, value: string) => void;
 };
 const TaskCard = ({
+  id,
   priority,
   title,
   description,
   status,
   onStatusChange,
+  onTaskUpdate,
 }: TaskCardProps) => {
   const [showDropDown, setShowDropDown] = useState(false);
 
@@ -42,7 +50,29 @@ const TaskCard = ({
             ) : (
               <FaFaceSmileWink className="h-6 w-6" />
             )}
-            {priority}
+            <select
+              value={priority}
+              onChange={(e) => onTaskUpdate(id, "priority", e.target.value)}
+            >
+              <option
+                value="Low"
+                className="bg-indigo-100 dark:bg-gray-900 text-black dark:text-white"
+              >
+                Low
+              </option>
+              <option
+                value="Medium"
+                className="bg-indigo-100 dark:bg-gray-900 text-black dark:text-white"
+              >
+                Medium
+              </option>
+              <option
+                value="High"
+                className="bg-indigo-100 dark:bg-gray-900 text-black dark:text-white"
+              >
+                High
+              </option>
+            </select>
           </div>
         </div>
 
@@ -82,8 +112,16 @@ const TaskCard = ({
         </div>
       </div>
 
-      <h4 className="font-bold text-lg mb-2.5">{title}</h4>
-      <p>{description}</p>
+      <input
+        type="text"
+        className="font-bold text-lg mb-2.5"
+        value={title}
+        onChange={(e) => onTaskUpdate(id, "title", e.target.value)}
+      />
+      <textarea
+        value={description}
+        onChange={(e) => onTaskUpdate(id, "description", e.target.value)}
+      />
     </div>
   );
 };

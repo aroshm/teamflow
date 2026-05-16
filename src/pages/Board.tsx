@@ -30,6 +30,14 @@ const Board = () => {
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
+  const updateTask = (id: string, field: string, value: string) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, [field]: value } : task,
+      ),
+    );
+  };
+
   return (
     <div className="flex flex-1 flex-col gap-5 min-h-0 overflow-auto">
       <BoardHeader onAddTask={addTask} />
@@ -40,12 +48,14 @@ const Board = () => {
               .filter((task) => task.status === status)
               .map((task) => (
                 <TaskCard
-                  key={task.title}
+                  id={task.id}
+                  key={task.id}
                   priority={task.priority}
                   title={task.title}
                   description={task.description}
                   status={task.status}
                   onStatusChange={updateTaskStatus}
+                  onTaskUpdate={updateTask}
                 />
               ))}
           </Column>
