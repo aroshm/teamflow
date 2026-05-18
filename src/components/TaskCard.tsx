@@ -16,7 +16,7 @@ type TaskCardProps = {
   title: string;
   description: string;
   status: TaskStatus | string;
-  onStatusChange: (title: string, value: string) => void;
+  onStatusChange: (id: string, value: string) => void;
   onTaskUpdate: (id: string, field: string, value: string) => void;
   onDeleteTask: (id: string) => void;
   handleKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void;
@@ -76,7 +76,7 @@ const TaskCard = ({
         <div className="relative">
           <select
             value={status}
-            onChange={(e) => onStatusChange(title, e.target.value)}
+            onChange={(e) => onStatusChange(id, e.target.value)}
             onKeyDown={(e) => handleKeyDown(e)}
           >
             {TASK_STATUSES.map((item) => (

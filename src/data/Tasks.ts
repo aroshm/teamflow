@@ -1,4 +1,6 @@
-const Tasks = [
+import type { Task } from "../types/task";
+
+const Tasks: Task[] = [
   {
     id: "task-1",
     priority: "High",

@@ -1,35 +1,30 @@
 import { useState } from "react";
-import Column from "../components/board/Column";
-import TaskCard from "../components/TaskCard";
 import Tasks from "../data/Tasks";
-import { TASK_STATUSES, type TaskStatus } from "../types/task";
+import { TASK_STATUSES, type Task, type TaskStatus } from "../types/task";
 import BoardHeader from "../components/board/BoardHeader";
-import {
-  DragDropProvider,
-  useDraggable,
-  useDroppable,
-  type DragEndEvent,
-} from "@dnd-kit/react";
+import { DragDropProvider, type DragEndEvent } from "@dnd-kit/react";
+import DroppableColumn from "../components/board/DroppableColumn";
+import DraggableTaskCard from "../components/board/DraggableTaskCard";
 
 const Board = () => {
   const [tasks, setTasks] = useState(Tasks);
 
   const columns = TASK_STATUSES;
 
-  const updateTaskStatus = (title: string, value: string) => {
+  const updateTaskStatus = (id: string, value: string) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
-        task.title === title ? { ...task, status: value } : task,
+        task.id === id ? { ...task, status: value as TaskStatus } : task,
       ),
     );
   };
 
   const addTask = () => {
-    const newTask = {
+    const newTask: Task = {
       id: crypto.randomUUID(),
       title: "",
       description: "",
-      priority: "",
+      priority: "Low",
       status: "To Do",
     };
 
@@ -69,61 +64,6 @@ const Board = () => {
     );
   };
 
-  const DraggableTaskCard = ({
-    task,
-    updateTaskStatus,
-    updateTask,
-    deleteTask,
-    escapeFocus,
-  }: {
-    task: (typeof Tasks)[number];
-    updateTaskStatus: (title: string, value: string) => void;
-    updateTask: (id: string, field: string, value: string) => void;
-    deleteTask: (id: string) => void;
-    escapeFocus: (e: React.KeyboardEvent<HTMLElement>) => void;
-  }) => {
-    const { ref, isDragging } = useDraggable({
-      id: task.id,
-    });
-
-    return (
-      <div ref={ref} className={isDragging ? "opacity-50" : ""}>
-        <TaskCard
-          id={task.id}
-          priority={task.priority}
-          title={task.title}
-          description={task.description}
-          status={task.status}
-          onStatusChange={updateTaskStatus}
-          onTaskUpdate={updateTask}
-          onDeleteTask={deleteTask}
-          handleKeyDown={escapeFocus}
-        />
-      </div>
-    );
-  };
-
-  const DroppableColumn = ({
-    status,
-    children,
-  }: {
-    status: TaskStatus;
-    children: React.ReactNode;
-  }) => {
-    const { ref } = useDroppable({
-      id: status,
-    });
-
-    return (
-      <div
-        ref={ref}
-        className="flex flex-1 rounded-lg shadow p-3.5 border bg-indigo-100 border-indigo-200 dark:border-indigo-400 dark:bg-gray-900"
-      >
-        <Column title={status}>{children}</Column>
-      </div>
-    );
-  };
-
   return (
     <DragDropProvider onDragEnd={handleDragEnd}>
       <div className="flex flex-1 flex-col gap-5 min-h-0 overflow-auto">
@@ -137,10 +77,10 @@ const Board = () => {
                   <DraggableTaskCard
                     key={task.id}
                     task={task}
-                    updateTaskStatus={updateTaskStatus}
-                    updateTask={updateTask}
-                    deleteTask={deleteTask}
-                    escapeFocus={escapeFocus}
+                    onStatusChange={updateTaskStatus}
+                    onTaskUpdate={updateTask}
+                    onDeleteTask={deleteTask}
+                    handleKeyDown={escapeFocus}
                   />
                 ))}
             </DroppableColumn>
